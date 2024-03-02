@@ -1,104 +1,62 @@
-from solution import LittleBell
+# Класс Accountant должен уметь одинаково успешно работать и с экземплярами
+# класса Pupa и с экземплярами класса Lupa. У класса Accountant должен быть
+# метод give_salary(worker). Который, получая на вход экземпляр классов Pupa или
+# Lupa, вызывает у них метод take_salary(int). Необходимо придумать как
+# реализовать такое поведение. Метод take_salary инкрементирует внутренний
+# счётчик у каждого экземпляра класса на переданное ему значение.
+# При этом Pupa и Lupa два датасайнтиста и должны работать с числами. У них
+# есть метод do_work (spisok1, spisok2). Pupa считывают из обоих переданных ему
+# списков числа и поэлементно их суммируют. Lupa считывают из обоих
+# переданных ему списков числа и поэлементно их вычитают. Работники обоих
+# типов выводят результат своих трудов на экран.
+# Класс Accountant реализует логику начисления ЗП на ваше
+# усмотрение, но будьте внимательны чтобы не получилось так, что
+# Lupa получит за Pupa, а Pupa ничего не получит.
 
-def lab_1():
-    treuNum = 0
-    while(treuNum == 0):
-        num = float(input("Введите температуру в Цельсиях (Чтобы выйти из программы введите 777): "))
-        if(num == 777):
-            treuNum = 1
-            return
+class Accountant:
+    def give_salary(self, worker):
+        worker.take_salary(1000)
 
-        if (num < 15.5):
-            print("Холодно")
-        elif(num > 15.5 and num < 28):
-            print("Нормально")
-        else:
-            print("Жарко")
+class Pupa:
+    def __init__(self):
+        self.salary = 0
 
+    def take_salary(self, amount):
+        self.salary += amount
 
-def lab_2():
-    num = int(input("Введите сколько строк: "))
-    miy = False
+    def do_work(self, list1, list2):
+        result = [x + y for x, y in zip(list1, list2)]
+        print("Пупа:", result)
 
-    for i in range(num):
-        string = input(f"Строка {i}: ")
-        if ("кот" in string):
-            miy = True
+class Lupa:
+    def __init__(self):
+        self.salary = 0
 
-    if(miy):
-        print("МЯУ")
-    else:
-        print("Нет")
+    def take_salary(self, amount):
+        self.salary += amount
 
-def lab_3():
-    booling = False
-    string = []
-
-    while(booling == False):
-        word = input()
-        if (word == 'стоп' or word == 'Стоп'):
-            booling = True
-        else:
-            string.append(word)
-
-    max_word = max(string, key=len)
-    min_word = min(string, key=len)
-    
-    print(max_word, min_word)
-
-    for elem in min_word:
-        if(elem not in max_word):
-            print("Нет")
-            return
-        
-    print('Да')
-
-
-def lab_4():
-    booling = int(input("Введите кол-во покупочек: "))
-    string = []
-
-    for _ in range(booling):
-        string.append(input())
-
-    for i in range(booling):
-        print(string[i])
-
-def lab_5():
-    word = input("Оденься... ")
-    string = ''
-    for elem in word:
-        string += elem + elem
-
-    print(string)
-
-def gret():
-    firstname = input("Ваше имя: ")
-    secondname = input("Ваша фамилия: ")
-
-    return firstname, secondname
-
-def lab_6():
-    firstname, secondname = gret()
-    print(f"Здравствуйте, {firstname} {secondname}.")
-
-
-def lab_7():
-    bell = LittleBell()
-    
-    bell.sound()
-    bell.sound()
-    bell.sound()
+    def do_work(self, list1, list2):
+        result = [x - y for x, y in zip(list1, list2)]
+        print("Лупа:", result)
 
 
 def main():
-    # lab_1()
-    # lab_2()
-    # lab_3()
-    # lab_4()
-    # lab_5()
-    # lab_6()
-    lab_7()
+    pupa = Pupa()
+    lupa = Lupa()
+    accountant = Accountant()
+
+    pupa_list = [1, 2, 3]
+    lupa_list = [3, 2, 1]
+
+    pupa.do_work(pupa_list, pupa_list)
+    lupa.do_work(lupa_list, lupa_list)
+
+    accountant.give_salary(pupa)
+    accountant.give_salary(lupa)
+
+    print("Пупа:", pupa.salary)
+    print("Лупа:", lupa.salary)
+
 
 if __name__ == "__main__":
     main()
