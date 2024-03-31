@@ -87,8 +87,8 @@ def lab_2_tab_4_5():
     rf_auc = auc(rf_fpr, rf_tpr)
 
     plt.figure(figsize=(8, 6))
-    plt.plot(svm_fpr, svm_tpr, linestyle='--', label='SVM (AUC = %0.2f)' % svm_auc)
-    plt.plot(rf_fpr, rf_tpr, marker='.', label='Random Forest (AUC = %0.2f)' % rf_auc)
+    plt.plot(svm_tpr, svm_fpr, linestyle='--', label='SVM (AUC = %0.2f)' % svm_auc)
+    plt.plot(rf_tpr, rf_fpr, marker='.', label='Random Forest (AUC = %0.2f)' % rf_auc)
 
     plt.xlabel('False Positive Rate')
     plt.ylabel('True Positive Rate')
